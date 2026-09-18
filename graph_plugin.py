@@ -10,9 +10,11 @@ from sd.api.sbs.sdsbscompgraph import SDSBSCompGraph
 GRID = 160.0
 HERE = os.path.dirname(os.path.abspath(__file__))
 VECTOR_SOURCE = os.path.join(HERE, "vector_pattern.svg")
+LOTTIE_SUFFIXES = (".lot", ".json")
 OUTPUT_PACKAGE = os.path.join(HERE, "out", "pattern.sbs")
 
 PATTERN_INPUT_IMAGE = 1
+LOTTIE_FRAME = 0
 
 
 def _root_quadrant(fxmap_node):
@@ -21,6 +23,18 @@ def _root_quadrant(fxmap_node):
         if node.getDefinition().getId() == "sbs::fxmap::paramset":
             return node
     return fxmap_graph.newNode("sbs::fxmap::paramset")
+
+
+def as_svg(vector_source):
+    """A Lottie source becomes SVG, so what reaches the graph is still vector."""
+    if not vector_source.lower().endswith(LOTTIE_SUFFIXES):
+        return vector_source
+    from lottie_to_svg import convert_file
+
+    written, unsupported = convert_file(vector_source, frame=LOTTIE_FRAME)
+    if unsupported:
+        print("material-graph-maskscore skipped %d non-shape layers" % len(unsupported))
+    return written
 
 
 def build_vector_fxmap_graph(context, vector_source=VECTOR_SOURCE):
@@ -32,7 +46,7 @@ def build_vector_fxmap_graph(context, vector_source=VECTOR_SOURCE):
 
     # SVG resources refuse BinaryEmbedded (SDApiError.NotSupported); the package
     # links the file instead.
-    resource = SDResourceSVG.sNewFromFile(package, vector_source, EmbedMethod.Linked)
+    resource = SDResourceSVG.sNewFromFile(package, as_svg(vector_source), EmbedMethod.Linked)
     resource.setIdentifier("vector_pattern")
 
     svg_node = graph.newInstanceNode(resource)

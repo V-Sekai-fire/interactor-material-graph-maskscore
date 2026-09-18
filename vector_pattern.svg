@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <rect width="256" height="256" fill="black"/>
-  <path d="M128 24 L196 128 L128 232 L60 128 Z" fill="white"/>
-  <circle cx="128" cy="128" r="34" fill="black"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><g transform="translate(128 128)"><g fill="rgb(0,0,0)" fill-opacity="1" stroke="none" transform="translate(0 0)"><rect x="-128" y="-128" width="256" height="256" rx="0"/></g></g><g transform="translate(128 128)"><g fill="rgb(255,255,255)" fill-opacity="1" stroke="none" transform="translate(0 0)"><path d="M 0 -104 C 0 -104 68 0 68 0 C 68 0 0 104 0 104 C 0 104 -68 0 -68 0 C -68 0 0 -104 0 -104 Z"/></g></g><g transform="translate(128 128)"><g fill="rgb(0,0,0)" fill-opacity="1" stroke="none" transform="translate(0 0)"><ellipse cx="0" cy="0" rx="34" ry="34"/></g></g></svg>

@@ -7,6 +7,25 @@ Generate MaskScore/EditScore material datasets from a node-based material author
 tool, so a pattern is resolution-independent by construction: the shape enters the
 graph as vector art and the FX-Map places it, rather than a raster tile being scaled.
 
+## Vector sources
+SVG goes in as it is. A Lottie file (`.lot` or `.json`, the spec is at
+<https://lottie.github.io/lottie-spec/latest/>) is converted to SVG at one frame first,
+so what reaches the graph is still vector and the pattern stays resolution-independent.
+Rasterising the frame would give the FX-Map a bitmap and lose exactly the property the
+graph is built for.
+
+`thorvg_check.py` renders the Lottie frame and the converted SVG through ThorVG and
+compares them; `--self-test` carries the control that reversed layer order fails, which
+is the defect it caught when first run: Lottie paints the first layer on top, SVG the
+last.
+
+    python3 lottie_to_svg.py vector_pattern.lot
+    python3 thorvg_check.py vector_pattern.lot vector_pattern.svg
+    python3 thorvg_check.py vector_pattern.lot --self-test
+
+The conversion is an edit with a source and a result, so EditScore/MaskScore scores it
+the same way it scores the renders further down.
+
 ## Graph shape
 1. A vector-graphics resource is imported into the package and dropped in as an SVG node.
 2. That node feeds the FX-Map node's first input image.
