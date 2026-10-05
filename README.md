@@ -8,7 +8,15 @@ The shape enters the material graph as vector art and a scatter node places it, 
 
 ## Build and run
 
-`graph_plugin.py` runs inside the node-based material authoring tool as a user plugin and writes the material package. Then:
+Convert the animated source to SVG at one frame, and check the two render alike:
+
+```sh
+python3 lottie_to_svg.py vector_pattern.lot --svg vector_pattern.svg
+python3 thorvg_check.py vector_pattern.lot vector_pattern.svg
+python3 thorvg_check.py vector_pattern.lot --self-test
+```
+
+Copy `graph_plugin.py` into the node-based material authoring tool's user plugin directory and restart the tool; the plugin writes the material package. Then cook and render it:
 
 ```sh
 python3 cook_and_render.py
