@@ -24,4 +24,4 @@ python3 cook_and_render.py
 
 ## Licence
 
-There is no licence file, and the licence is not stated.
+MIT. See [LICENSE](LICENSE).
